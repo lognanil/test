@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const employeeBAL = require("../bal/employeeBAL");
+router.get("/getUserDetails", employeeBAL.getUserDetails);
+router.post("/submitDoc", employeeBAL.submitDoc);
+router.get("/getDeptDetails", employeeBAL.getDeptDetails);
+router.post("/submitDocmentdetails", employeeBAL.submitDocmentdetails);
+router.get("/getDocumentDetails", employeeBAL.getDocumentDetails);
+router.post("/requestData", employeeBAL.requestData);
+router.post("/submitReuploadDocmentdetails", employeeBAL.submitReuploadDocmentdetails);
+router.get("/getdeptidData", employeeBAL.getdeptidData);
+module.exports = router;

@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arati and Anil",
+  "license": "ISC",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "biguint-format": "^1.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "express-validation": "^4.1.0",
+    "ip": "^2.0.1",
+    "js-sha512": "^0.9.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.7",
+    "pg": "^8.11.5",
+    "pg-format": "^1.0.4",
+    "request-ip": "^3.3.0",
+    "sequelize": "^6.37.3",
+    "ua-parser-js": "^1.0.38"
+  }
+}
