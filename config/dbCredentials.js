@@ -1,10 +1,10 @@
 const dbCredentials = () => {
-  const encodedUser = "test_irqa_user"; //test_irqa_user
+   const encodedUser = "dGVzdF9pcnFhX3VzZXI"; //test_irqa_user  // dGVzdF9pcnFhX3VzZXI=
   const encodedHost =
     "V1GYXe6Nw7X85Rh5RuQONKMofktoE6fg@dpg-cthrfnd6l47c738b049g-a"; // V1GYXe6Nw7X85Rh5RuQONKMofktoE6fg@dpg-cthrfnd6l47c738b049g-a
-  const enCodedDatabase = "test_irqa"; // test_irqa
+  const enCodedDatabase = "dGVzdF9pcnFh"; // test_irqa // dGVzdF9pcnFh
   const encodedPassword = "V1GYXe6Nw7X85Rh5RuQONKMofktoE6fg"; // V1GYXe6Nw7X85Rh5RuQONKMofktoE6fg
-  const encodedPort = "5432"; //  5432
+  const encodedPort = "NTQzMg=="; //  5432 // NTQzMg==
   return {
     encodedUser,
     encodedHost,
