@@ -110,18 +110,43 @@ exports.getPermissionDetails = () =>
     }
   });
 
+// exports.activeData = ({ data }) =>
+//   new Promise(async (resolve, reject) => {
+//     const client = await pool.connect().catch((err) => {
+//       reject(new Error(`Unable to connect to the database: ${err}`));
+//     });
+//     try {
+//       console.log(data,'data')
+//       //permission dia hele user login kariba
+//       const query = `UPDATE "UserLogin" SET  "IsLoggedIn"=true, "Status"=true WHERE "UserID"='${data}';`;
+//       // const query1 = `UPDATE public."Registration" SET "permissionStatus"='0' WHERE "UserID"='${data}';`;
+//       console.log(query,'query')
+//       const response = await client.query(query);
+//       const result = {
+//         rowCount: response.rowCount,
+//       };
+//       resolve(result);
+//     } catch (e) {
+//       reject(new Error(`Oops! An error occurred: ${e}`));
+//     } finally {
+//       client.release();
+//     }
+//   });
+
+
+
 exports.activeData = ({ data }) =>
   new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => {
       reject(new Error(`Unable to connect to the database: ${err}`));
     });
     try {
-      //permission dia hele user login kariba
+      console.log(data,'data')
       const query = `UPDATE public."UserLogin" SET  "IsLoggedIn"=true, "Status"=true WHERE "UserID"='${data}';`;
-      // const query1 = `UPDATE public."Registration" SET "permissionStatus"='0' WHERE "UserID"='${data}';`;
+      console.log(query,'query')
       const response = await client.query(query);
       const result = {
-        rowCount: response.rowCount,
+        rowCount: response.rowCount
       };
       resolve(result);
     } catch (e) {
@@ -129,7 +154,7 @@ exports.activeData = ({ data }) =>
     } finally {
       client.release();
     }
-  });
+});
 
  exports.getViewDetails = () =>
   new Promise(async (resolve, reject) => {

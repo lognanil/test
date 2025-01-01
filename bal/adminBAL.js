@@ -83,6 +83,7 @@ exports.getPermissionDetails = async (req, res) => {
 
 exports.activeData = async (req, res) => {
   try {
+    console.log('activedata')
     const result = await adminDAL.activeData(req.params);
     res.send(result);
   } catch (e) {

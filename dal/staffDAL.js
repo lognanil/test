@@ -82,10 +82,11 @@ exports.submitDocmentdetails = (data, userID) =>
       reject(new Error(`Unable to connect to the database: ${err}`));
     });
     try {
+      // console.log(data,'userrrrr');
       await client.query("begin");
       const query1 = `INSERT INTO public."documentTbl"(
-	   "userId", "docName", "docPath", "docStatus", "DateTime", "Remark")
-	    VALUES ('${userID}', '${data.documentName}', '${data.attachedDocument}','1', NOW(), '${data.description}');`;
+	   "userId", "docName", "docPath", "docStatus", "DateTime", "Remark","docId")
+	    VALUES ('${userID}', '${data.documentName}', '${data.documentFileUrl}','1', NOW(), '${data.description}','${data.docId}');`;
       const response1 = await client.query(query1);
       await client.query("commit");
       resolve(true);
@@ -96,3 +97,94 @@ exports.submitDocmentdetails = (data, userID) =>
       client.release();
     }
 });
+
+exports.getDeptDetails = () =>
+  new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => {
+      reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+    try {
+      const query = `SELECT "deptId", "deptName" FROM public."Dept";`;
+      const response = await client.query(query);
+      resolve(response.rows);
+    } catch (e) {
+      reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+      client.release();
+    }
+  });
+
+  
+exports.getDocumentDetails = (userID) =>
+  new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => {
+      reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+    try {
+      const query = `select a."docName",a."docId",b."userName",b."userEmployeeId",b."userDeptId",b."DateTime",b."Remark",a."docPath"  from "documentTbl" a 
+       inner join "Registration" b on a."userId" = b."userId"
+      where  a."userId" ='${userID}';`;
+      // b."permissionStatus" in ('0','1') and
+      const response = await client.query(query);
+      resolve(response.rows);
+    } catch (e) {
+      reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+      client.release();
+    }
+  });
+
+exports.requestData = (data, userID) =>
+  new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => {
+      reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+    try {
+      await client.query("begin");
+      const query1 = `update "documentTbl" set "RequestMsg"='${data.reply}',"RequestStatus"='0' where "userId"='${userID}' and "docId"='${data.id}'`;
+      const response1 = await client.query(query1);
+      await client.query("commit");
+      resolve(true);
+    } catch (e) {
+      await client.query("rollback");
+      reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+      client.release();
+    }
+  });
+   
+exports.submitReuploadDocmentdetails = (data, userID) =>
+  new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => {
+      reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+    try {
+      await client.query("begin");
+      const query1 = `update "documentTbl" set "userId"='${userID}', "docName"='${data.documentName}', "docPath"='${data.attachedDocument}', "Remark"='${data.description}' where "RequestStatus"='1';`;
+      const response1 = await client.query(query1);
+      await client.query("commit");
+      resolve(true);
+    } catch (e) {
+      await client.query("rollback");
+      reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+      client.release();
+    }
+  });
+  
+exports.getdeptidData = (userID) =>
+  new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => {
+      reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+    try {
+      const query = `select distinct a."docName",a."docNameId",b."docStatus" from public."docNameMaster" a 
+      left join "documentTbl" b on a."docNameId"=b."docId" and  b."userId"='${userID}'  where b."docStatus" is null;`
+      const response = await client.query(query);
+      resolve(response.rows);
+    } catch (e) {
+      reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+      client.release();
+    }
+  });

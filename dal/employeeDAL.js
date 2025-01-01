@@ -92,16 +92,40 @@ exports.submitDoc = (data, userID) =>
     }
   });
 
+// exports.submitDocmentdetails = (data, userID) =>
+//   new Promise(async (resolve, reject) => {
+//     const client = await pool.connect().catch((err) => {
+//       reject(new Error(`Unable to connect to the database: ${err}`));
+//     });
+//     try {
+//       console.log(data,'datadata')
+//       await client.query("begin");
+//       const query1 = `INSERT INTO public."documentTbl"(
+// 	   "userId", "docName", "docPath", "docStatus", "DateTime", "Remark","docId","permissionStatus")
+// 	    VALUES ('${userID}', '${data.docName}', '${data.file}','1', NOW(), '${data.description}','${data.docId}','0');`;
+//       const response1 = await client.query(query1);
+//       await client.query("commit");
+//       resolve(true);
+//     } catch (e) {
+//       await client.query("rollback");
+//       reject(new Error(`Oops! An error occurred: ${e}`));
+//     } finally {
+//       client.release();
+//     }
+//   });
+
+
 exports.submitDocmentdetails = (data, userID) =>
   new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => {
       reject(new Error(`Unable to connect to the database: ${err}`));
     });
     try {
+      // console.log(data,'userrrrr');
       await client.query("begin");
       const query1 = `INSERT INTO public."documentTbl"(
-	   "userId", "docName", "docPath", "docStatus", "DateTime", "Remark","docId","permissionStatus")
-	    VALUES ('${userID}', '${data.docName}', '${data.file}','1', NOW(), '${data.description}','${data.docId}','0');`;
+	   "userId", "docName", "docPath", "docStatus", "DateTime", "Remark","docId")
+	    VALUES ('${userID}', '${data.documentName}', '${data.documentFileUrl}','1', NOW(), '${data.description}','${data.docId}');`;
       const response1 = await client.query(query1);
       await client.query("commit");
       resolve(true);
@@ -111,9 +135,7 @@ exports.submitDocmentdetails = (data, userID) =>
     } finally {
       client.release();
     }
-  });
-
-
+});
 
 exports.getDocumentDetails = (userID) =>
   new Promise(async (resolve, reject) => {
